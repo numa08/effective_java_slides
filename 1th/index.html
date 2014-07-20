@@ -1,0 +1,343 @@
+<html>
+      <head>
+        <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+        <title>1th</title>
+        <link type="text/css" rel="stylesheet" href="assets/css/show.css" />
+        <link type="text/css" rel="stylesheet" href="assets/css/prettify.css" />
+        <script type="text/javascript" src="assets/js/jquery.min.js"></script>
+        <script type="text/javascript" src="assets/js/show.js"></script>
+        <script type="text/javascript" src="assets/js/prettify/prettify.js"></script>
+        <script type="text/javascript" src="assets/js/prettify/lang-apollo.js"></script><script type="text/javascript" src="assets/js/prettify/lang-css.js"></script><script type="text/javascript" src="assets/js/prettify/lang-hs.js"></script><script type="text/javascript" src="assets/js/prettify/lang-lisp.js"></script><script type="text/javascript" src="assets/js/prettify/lang-lua.js"></script><script type="text/javascript" src="assets/js/prettify/lang-ml.js"></script><script type="text/javascript" src="assets/js/prettify/lang-proto.js"></script><script type="text/javascript" src="assets/js/prettify/lang-scala.js"></script><script type="text/javascript" src="assets/js/prettify/lang-sql.js"></script><script type="text/javascript" src="assets/js/prettify/lang-sql.js"></script><script type="text/javascript" src="assets/js/prettify/lang-vb.js"></script><script type="text/javascript" src="assets/js/prettify/lang-vhdl.js"></script><script type="text/javascript" src="assets/js/prettify/lang-wiki.js"></script><script type="text/javascript" src="assets/js/prettify/lang-yaml.js"></script><link type="text/css" rel="stylesheet" href="css/custom.css?1405899377640" />
+      <script type="text/javascript"><!--
+        window.onload=function() { prettyPrint(); };
+      --></script>
+      </head>
+      <body>
+        <div id="slides">
+          <div id="reel">
+            <div class="content" id="slide-0"><div class="container">
+                  <h1 id=""></h1><h2 id="%E3%81%88%E3%81%B5%E3%81%88%E3%81%87%28%3E_%3C%29%E3%81%8F%E3%81%A6%E3%81%83%E3%81%B6">えふえぇ(&gt;_&lt;)くてぃぶ</h2><h2 id="Java">Java</h2><a href="http://www.amazon.co.jp/gp/product/4621066056/ref=as_li_qf_sp_asin_il?ie=UTF8&camp=247&creative=1211&creativeASIN=4621066056&linkCode=as2&tag=reading-effecivejava-22"><img border="0" src="http://ws-fe.amazon-adsystem.com/widgets/q?_encoding=UTF8&ASIN=4621066056&Format=_SL250_&ID=AsinImage&MarketPlace=JP&ServiceVersion=20070822&WS=1&tag=reading-effecivejava-22" ></a><img src="http://ir-jp.amazon-adsystem.com/e/ir?t=reading-effecivejava-22&l=as2&o=9&a=4621066056" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;" />
+
+                </div>
+      </div><div class="content" id="slide-1"><div class="container">
+                  <h2 id="%E3%82%AA%E3%83%96%E3%82%B8%E3%82%A7%E3%82%AF%E3%83%88%E3%81%AE%E7%94%9F%E6%88%90%E3%81%A8%E6%B6%88%E6%BB%85">オブジェクトの生成と消滅</h2><ul><li>どのようにオブジェクトを生成すべきか
+</li><li>どのようにオブジェクトの生成を回避すべきか
+</li></ul>
+                </div>
+      </div><div class="content" id="slide-2"><div class="container">
+                  <h2 id="%E3%82%B3%E3%83%B3%E3%82%B9%E3%83%88%E3%83%A9%E3%82%AF%E3%82%BF%E3%81%AE%E4%BB%A3%E3%82%8F%E3%82%8A%E3%81%ABstatic%E3%83%95%E3%82%A1%E3%82%AF%E3%83%88%E3%83%AA%E3%83%BC%E3%83%A1%E3%82%BD%E3%83%83%E3%83%89%E3%82%92%E6%A4%9C%E8%A8%8E%E3%81%99%E3%82%8B">コンストラクタの代わりにstaticファクトリーメソッドを検討する</h2><ul><li><p>インスタンスをクライアントコードが得る方法
+</p><ul><li>publicなコンストラクタを提供する
+</li><li>publicなstaticファクトリーメソッド(static factory method)を提供する
+</li></ul></li></ul>
+                </div>
+      </div><div class="content" id="slide-3"><div class="container">
+                  <h2 id="Factory+Method%28GOF%29">Factory Method(GOF)</h2><ul><li><code>Factory</code>となるインスタンスを利用して、目的のオブジェクトのインスタンスを作る
+</li><li>Clientからは、生成されるクラスを意識しなくて良い
+</li><li>今回の話題とは直接の関係ない
+</li></ul><p><img alt=""  src="http://news.mynavi.jp/column/objc/061/images/Classes.jpg" />
+</p>
+                </div>
+      </div><div class="content" id="slide-4"><div class="container">
+                  <h2 id="Factory+Mewthod%28GOF%29">Factory Mewthod(GOF)</h2><h3 id="Java%E3%82%92%E5%88%A9%E7%94%A8%E3%81%97%E3%81%9F%E5%AE%9F%E8%A3%85%E3%82%A4%E3%83%A1%E3%83%BC%E3%82%B8">Javaを利用した実装イメージ</h3><pre><code class="prettyprint lang-java">public class ProductA implements Product{}
+public class ProductB implements Product{}
+public class ProductFactory {
+    //実は、AbstractFactoryパターンな気がする
+    public  Product createProduct(String productId) {
+        if (&quot;Product_A&quot;.equals(productId)) {
+            return new ProductA();
+        } else if(&quot;Product_B&quot;.equals(productId)) {
+            return new ProductB();
+        }
+        throw new NoProductException(productId + &quot;is not valid id&quot;);
+	}
+}
+fina ProductFactory factory = new ProductFactory();
+final Product product = factory.createProduct(&quot;Product_A&quot;);
+</code></pre>
+                </div>
+      </div><div class="content" id="slide-5"><div class="container">
+                  <h2 id="Factory+Method%28GOF%29">Factory Method(GOF)</h2><h3 id="Android%E3%81%A7%E3%81%AE%E5%88%A9%E7%94%A8%E4%BE%8B">Androidでの利用例</h3><pre><code class="prettyprint lang-java">final LayoutInflater inflater = 
+    (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+</code></pre>
+                </div>
+      </div><div class="content" id="slide-6"><div class="container">
+                  <h2 id="static%E3%83%95%E3%82%A1%E3%82%AF%E3%83%88%E3%83%AA%E3%83%BC%E3%83%A1%E3%82%BD%E3%83%83%E3%83%89%E3%81%AE%E9%95%B7%E6%89%80">staticファクトリーメソッドの長所</h2><ul><li>名前を持つことができる
+</li><li>新たなオブジェクト生成をする必要がない
+</li><li>戻り値の型を任意のサブタイプのオブジェクトにできる
+</li><li>パラメータ化された型のインスタンス生成の面倒さを低減
+</li></ul>
+                </div>
+      </div><div class="content" id="slide-7"><div class="container">
+                  <h2 id="static%E3%83%95%E3%82%A1%E3%82%AF%E3%83%88%E3%83%AA%E3%83%BC%E3%83%A1%E3%82%BD%E3%83%83%E3%83%89%E3%81%AE%E7%9F%AD%E6%89%80">staticファクトリーメソッドの短所</h2><ul><li>public,protectedコンストラクタを持たないクラスのサブクラスを作れない
+</li><li>他のstaticメソッドと区別がつかない
+</li></ul>
+                </div>
+      </div><div class="content" id="slide-8"><div class="container">
+                  <h2 id="%E5%90%8D%E5%89%8D%E3%82%92%E6%8C%81%E3%81%A4%E3%81%93%E3%81%A8%E3%81%8C%E3%81%A7%E3%81%8D%E3%82%8B">名前を持つことができる</h2><ul><li>コンストラクタはいつでもクラスと同じ名前
+</li><li>コンストラクタに対するパラメータが、返されるオブジェクトを表現しないケースに有効
+</li><li>結果、クライアントコードが読みやすくなる
+</li></ul>
+                </div>
+      </div><div class="content" id="slide-9"><div class="container">
+                  <h2 id="%E5%90%8D%E5%89%8D%E3%82%92%E6%8C%81%E3%81%A4%E3%81%93%E3%81%A8%E3%81%8C%E3%81%A7%E3%81%8D%E3%82%8B">名前を持つことができる</h2><pre><code class="prettyprint lang-java">
+// 文字列を解析して整数を生成していることが、明示的でない
+final Integer value = new Integer(&quot;100&quot;);
+
+// 文字列を解析して整数を生成していることが、明示的
+final Integer value = Integer.parseInt(&quot;100&quot;);
+</code></pre><ul><li>文字列を解析して<code>Intger</code>の生成を行う
+</li><li><em>解析</em> なので、失敗すると例外が投げられる。(NumberFormatException)
+</li><li><code>parseInt</code>の方が、解析(parse)することが明示的
+</li><li><a  href="http://grepcode.com/file/repository.grepcode.com/java/root/jdk/openjdk/8-b132/java/lang/Integer.java#Integer.%3Cinit%3E%28java.lang.String%29">GpreCode/Integer</a>
+</li></ul>
+                </div>
+      </div><div class="content" id="slide-10"><div class="container">
+                  <h2 id="%E6%96%B0%E3%81%9F%E3%81%AA%E3%82%AA%E3%83%96%E3%82%B8%E3%82%A7%E3%82%AF%E3%83%88%E3%82%92%E7%94%9F%E6%88%90%E3%81%99%E3%82%8B%E5%BF%85%E8%A6%81%E3%81%8C%E3%81%AA%E3%81%84">新たなオブジェクトを生成する必要がない</h2><ul><li>あらかじめ生成しておいたインスタンスを利用することもできる
+</li><li>クライアント側に意識させる必要がない
+</li></ul>
+                </div>
+      </div><div class="content" id="slide-11"><div class="container">
+                  <h2 id="%E6%96%B0%E3%81%9F%E3%81%AA%E3%82%AA%E3%83%96%E3%82%B8%E3%82%A7%E3%82%AF%E3%83%88%E3%82%92%E7%94%9F%E6%88%90%E3%81%99%E3%82%8B%E5%BF%85%E8%A6%81%E3%81%8C%E3%81%AA%E3%81%84">新たなオブジェクトを生成する必要がない</h2><pre><code class="prettyprint lang-java">
+// Integerインスタンスが生成される
+final Integer value = new Integer(1);
+
+// -128 ~ 127（メモリの状態により異なる）の間では
+// キャッシュが利用される
+final Integer value = Integer.valueOf(1);
+</code></pre><ul><li><em>インスタンスが制御されている</em> と表現するらしい
+</li><li>パフォーマンス上有利になりえる
+</li><li>シングルトン、インスタンス化不可能なオブジェクトの生成など
+</li><li><a  href="http://grepcode.com/file/repository.grepcode.com/java/root/jdk/openjdk/8-b132/java/lang/Integer.java#Integer.valueOf%28int%29">GrepCode/Integer</a>
+</li></ul>
+                </div>
+      </div><div class="content" id="slide-12"><div class="container">
+                  <h2 id="%E3%83%A1%E3%82%BD%E3%83%83%E3%83%89%E3%81%AE%E6%88%BB%E3%82%8A%E5%80%A4%E5%9E%8B%E3%82%92%E4%BB%BB%E6%84%8F%E3%81%AE%E3%82%B5%E3%83%96%E3%82%BF%E3%82%A4%E3%83%97%E3%81%AB%E3%81%A7%E3%81%8D%E3%82%8B">メソッドの戻り値型を任意のサブタイプにできる</h2><ul><li>返すオブジェクトのクラスをpublicにしないこともできる
+</li><li>パラメータに応じて返すオブジェクトを変えることが出来る
+</li></ul>
+                </div>
+      </div><div class="content" id="slide-13"><div class="container">
+                  <h2 id="%E3%83%A1%E3%82%BD%E3%83%83%E3%83%89%E3%81%AE%E6%88%BB%E3%82%8A%E5%80%A4%E5%9E%8B%E3%82%92%E4%BB%BB%E6%84%8F%E3%81%AE%E3%82%B5%E3%83%96%E3%82%BF%E3%82%A4%E3%83%97%E3%81%AB%E3%81%A7%E3%81%8D%E3%82%8B">メソッドの戻り値型を任意のサブタイプにできる</h2><pre><code class="prettyprint lang-java">// 普通のArrayList
+final List&lt;Integer&gt; list = new ArrayList&lt;&gt;();
+list.add(1);
+
+// スレッドセーフなArrayList
+final List&lt;Integer&gt; list = Collections.synchronizedList(new ArrayList&lt;Integer&gt;());
+list.add(1);
+</code></pre><ul><li>後者は実は<code>SynchronizedList</code>を利用している
+</li><li>クライアントは無意識に利用できる
+</li><li><a  href="http://grepcode.com/file/repository.grepcode.com/java/root/jdk/openjdk/8-b132/java/util/Collections.java#2451">GrepCode/Collections</a>
+</li></ul>
+                </div>
+      </div><div class="content" id="slide-14"><div class="container">
+                  <h2 id="%E3%83%91%E3%83%A9%E3%83%A1%E3%83%BC%E3%82%BF%E5%8C%96%E3%81%95%E3%82%8C%E3%81%9F%E5%9E%8B%E3%81%AE%E3%82%A4%E3%83%B3%E3%82%B9%E3%82%BF%E3%83%B3%E3%82%B9%E5%8C%96%E3%81%AE%E9%9D%A2%E5%80%92%E3%81%95%E3%82%92%E4%BD%8E%E6%B8%9B">パラメータ化された型のインスタンス化の面倒さを低減</h2><pre><code class="prettyprint lang-java">// 左辺、右辺で型パラメータを定義していて冗長
+final Map&lt;String, String&gt; map= = new HashMap&lt;String, String&gt;();
+
+// 左辺のみでの定義になってシンプル
+final Map&lt;String, String&gt; map = HashMap.newInstance();
+</code></pre><ul><li>ただし、このメリットはJava6まで
+</li></ul>
+                </div>
+      </div><div class="content" id="slide-15"><div class="container">
+                  <h2 id="%E3%83%91%E3%83%A9%E3%83%A1%E3%83%BC%E3%82%BF%E5%8C%96%E3%81%95%E3%82%8C%E3%81%9F%E5%9E%8B%E3%81%AE%E3%82%A4%E3%83%B3%E3%82%B9%E3%82%BF%E3%83%B3%E3%82%B9%E5%8C%96%E3%81%AE%E9%9D%A2%E5%80%92%E3%81%95%E3%82%92%E4%BD%8E%E6%B8%9B">パラメータ化された型のインスタンス化の面倒さを低減</h2><ul><li>Java7以上、あるいは最近のAndroidではダイアモンド構文を使いましょう
+</li></ul><pre><code class="prettyprint lang-java">// 右辺の型パラメータを省略できる
+final Map&lt;String, String&gt; map = new HashMap&lt;&gt;();
+</code></pre>
+                </div>
+      </div><div class="content" id="slide-16"><div class="container">
+                  <h2 id="public%2Cprotected%E3%82%B3%E3%83%B3%E3%82%B9%E3%83%88%E3%83%A9%E3%82%AF%E3%82%BF%E3%82%92%E6%8C%81%E3%81%9F%E3%81%AA%E3%81%84%E3%82%AF%E3%83%A9%E3%82%B9%E3%81%AE%E3%82%B5%E3%83%96%E3%82%AF%E3%83%A9%E3%82%B9%E3%81%AF%E4%BD%9C%E3%82%8C%E3%81%AA%E3%81%84">public,protectedコンストラクタを持たないクラスのサブクラスは作れない</h2><ul><li>staticファクトリーメソッドを使えばインスタンスの提供はできるが、サブクラスは作れない
+</li><li>不便っちゃ不便
+</li></ul>
+                </div>
+      </div><div class="content" id="slide-17"><div class="container">
+                  <h2 id="public%2Cprotected%E3%82%B3%E3%83%B3%E3%82%B9%E3%83%88%E3%83%A9%E3%82%AF%E3%82%BF%E3%82%92%E6%8C%81%E3%81%9F%E3%81%AA%E3%81%84%E3%82%AF%E3%83%A9%E3%82%B9%E3%81%AE%E3%82%B5%E3%83%96%E3%82%AF%E3%83%A9%E3%82%B9%E3%81%AF%E4%BD%9C%E3%82%8C%E3%81%AA%E3%81%84">public,protectedコンストラクタを持たないクラスのサブクラスは作れない</h2><pre><code class="prettyprint lang-java">// privateなコンストラクタしか持たないクラス
+public class Product {
+    private Product(){} 
+
+    // staticファクトリーメソッドで、インスタンスを
+    // 作る
+    public static Product getInstance() {
+    	return Product;
+    }
+ }
+// コンパイルエラー
+public class ProductA extends Product{}
+</code></pre>
+                </div>
+      </div><div class="content" id="slide-18"><div class="container">
+                  <h2 id="%E4%BB%96%E3%81%AEstatic%E3%83%A1%E3%82%BD%E3%83%83%E3%83%89%E3%81%A8%E5%8C%BA%E5%88%A5%E3%81%8C%E4%BB%98%E3%81%8B%E3%81%AA%E3%81%84">他のstaticメソッドと区別が付かない</h2><ul><li>ファクトリーメソッドではないstaticメソッドが同時にある場合
+</li><li>メソッド名前から役割を連想できないと、辛い
+</li><li>メソッド名は適切な名前を( ｰ`дｰ´)ｷﾘｯ
+</li></ul>
+                </div>
+      </div><div class="content" id="slide-19"><div class="container">
+                  <h2 id="%E4%BB%96%E3%81%AEstatic%E3%83%A1%E3%82%BD%E3%83%83%E3%83%89%E3%81%A8%E5%8C%BA%E5%88%A5%E3%81%8C%E3%81%A4%E3%81%8B%E3%81%AA%E3%81%84">他のstaticメソッドと区別がつかない</h2><ul><li><p>valueOf/of
+</p><ul><li>パラメータと同じ値を持つインスタンスを返す
+</li><li><code>Integer.valueOf</code>
+</li></ul></li><li><p>getInstance
+</p><ul><li>パラメータと同じ値を返すとは限らない
+</li><li>シングルトンの場合もある
+</li></ul></li><li><p>newInstance
+</p><ul><li>シングルトンではない
+</li></ul></li></ul>
+                </div>
+      </div><div class="content" id="slide-20"><div class="container">
+                  <h2 id="%E3%81%BE%E3%81%A8%E3%82%81">まとめ</h2><ul><li>staticファクトリーメソッドのもつ利点は多い
+</li><li>たいていの場合、コンストラクタより好ましい
+</li><li>安易にコンストラクタの提供をするより、staticファクトリーメソッドの検討をする
+</li></ul>
+                </div>
+      </div><div class="content" id="slide-21"><div class="container">
+                  <h2 id="%E3%81%9F%E3%81%84%E3%81%A6%E3%81%84%E3%81%AE%E5%A0%B4%E5%90%88%E3%80%81%E3%82%B3%E3%83%B3%E3%82%B9%E3%83%88%E3%83%A9%E3%82%AF%E3%82%BF%E3%82%88%E3%82%8A%E5%A5%BD%E3%81%BE%E3%81%97%E3%81%84%EF%BC%9F%EF%BC%9F%EF%BC%9F">たいていの場合、コンストラクタより好ましい？？？</h2><ul><li>好ましくないケースもある
+</li><li>「型」に情報を持たせるケース
+</li></ul>
+                </div>
+      </div><div class="content" id="slide-22"><div class="container">
+                  <h2 id="%E5%9E%8B%E3%81%AB%E6%83%85%E5%A0%B1%E3%82%92%E6%8C%81%E3%81%9F%E3%81%9B%E3%81%9F%E3%81%84">型に情報を持たせたい</h2><pre><code class="prettyprint lang-java">// スレッドセーフなArrayList
+final List&lt;Integer&gt; list = Collections.synchronizedList(new ArrayList&lt;Integer&gt;());
+list.add(1);
+</code></pre><ul><li><code>list</code>のスコープが広がると、スレッドセーフなのかわかりにくくなるような？
+</li><li><code>SynchronizedList</code>はクライアントは参照できないクラス
+</li><li>単純な<code>List</code>としての情報のみしか、クライアントは持つことができない
+</li><li>そもそもスコープを広げるなって話ではあるが
+</li></ul>
+                </div>
+      </div><div class="content" id="slide-23"><div class="container">
+                  <h2 id="%E6%95%B0%E5%A4%9A%E3%81%8F%E3%81%AE%E3%82%B3%E3%83%B3%E3%82%B9%E3%83%88%E3%83%A9%E3%82%AF%E3%82%BF%E3%83%91%E3%83%A9%E3%83%A1%E3%83%BC%E3%82%BF%E3%81%AB%E7%9B%B4%E9%9D%A2%E3%81%97%E3%81%9F%E6%99%82%E3%81%AB%E3%81%AF%E3%83%93%E3%83%AB%E3%83%80%E3%83%BC%E3%82%92%E6%A4%9C%E8%A8%8E%E3%81%99%E3%82%8B">数多くのコンストラクタパラメータに直面した時にはビルダーを検討する</h2><ul><li>コンストラクタのパラメータが多い場合はバグを容易に生む
+</li><li>特に、パラメータの型が同じ物が並んでいる場合は地獄絵図
+</li><li>テレスコーピングコンストラクタパターン
+</li><li>JavaBeansパターン
+</li></ul>
+                </div>
+      </div><div class="content" id="slide-24"><div class="container">
+                  <h2 id="%E3%83%86%E3%83%AC%E3%82%B9%E3%82%B3%E3%83%BC%E3%83%94%E3%83%B3%E3%82%B0%E3%82%B3%E3%83%B3%E3%82%B9%E3%83%88%E3%83%A9%E3%82%AF%E3%82%BF%E3%83%91%E3%82%BF%E3%83%BC%E3%83%B3">テレスコーピングコンストラクタパターン</h2><ul><li>コンストラクタをオーバーロードする
+</li><li>初期値を定義する
+</li><li>伝統的なやり方
+</li><li>コードの例はp.11参照
+</li></ul>
+                </div>
+      </div><div class="content" id="slide-25"><div class="container">
+                  <h2 id="%E3%83%86%E3%83%AC%E3%82%B9%E3%82%B3%E3%83%BC%E3%83%94%E3%83%B3%E3%82%B0%E3%82%B3%E3%83%B3%E3%82%B9%E3%83%88%E3%83%A9%E3%82%AF%E3%82%BF%E3%83%91%E3%82%BF%E3%83%BC%E3%83%B3">テレスコーピングコンストラクタパターン</h2><ul><li>分かりやすいデメリット
+</li></ul><pre><code class="prettyprint lang-java">final NutritionFats cocaCola = new NutritionFats(210, 8, 100, 0, 35, 27);
+final NutritionFats pepsiCola = new NutritionFats(210, 8, 100, 0, 27, 35);
+</code></pre><ul><li>???「コンストラクタの第五引数と第六引数を入れ替えたけど、分かるかな？」
+</li></ul>
+                </div>
+      </div><div class="content" id="slide-26"><div class="container">
+                  <h2 id="JavaBeans%E3%83%91%E3%82%BF%E3%83%BC%E3%83%B3">JavaBeansパターン</h2><ul><li>インスタンスを生成するのは容易
+</li><li>メソッド名に気をつければ、コードも読みやすい
+</li></ul>
+                </div>
+      </div><div class="content" id="slide-27"><div class="container">
+                  <h2 id="JavaBeans%E3%83%91%E3%82%BF%E3%83%BC%E3%83%B3">JavaBeansパターン</h2><pre><code class="prettyprint lang-java">// 今からインスタンスを作るので、この間に処理を入れないこと！！
+final NutritionFats cocaCola = new NutritionFats();
+cocaCola.setServingSize(240);
+new Thread(new Runnable(){
+ public void run() {
+    // ククク・・・
+    cocaCola.setServings(100000);
+ }
+}).start();
+cocaCola.setServings(8);
+cocaCola.setSodium(35);
+</code></pre><ul><li>スレッドアンセーフ
+</li><li>生成中はオブジェクトが不整合かもしれない
+</li></ul>
+                </div>
+      </div><div class="content" id="slide-28"><div class="container">
+                  <h2 id="JavaBeans%E3%83%91%E3%82%BF%E3%83%BC%E3%83%B3">JavaBeansパターン</h2><ul><li>「名前付き引数」を意識したパターン
+</li></ul><pre><code class="prettyprint lang-ruby">def param_with_name(name : &quot;undefined&quot;, age: 0)
+    puts &quot;name=#{name}, age is #{age}&quot;
+end
+
+param_with_name(name: &quot;numa08&quot;, age: 10)
+# name=numa08, age is 10
+</code></pre>
+                </div>
+      </div><div class="content" id="slide-29"><div class="container">
+                  <h2 id="%E3%83%93%E3%83%AB%E3%83%80%E3%83%BC%E3%83%91%E3%82%BF%E3%83%BC%E3%83%B3">ビルダーパターン</h2><ul><li>テレスコーピングパターンの安全性
+</li><li>JavaBeansパターンの可読性
+</li><li>クライアントはビルダーオブジェクトを生成する
+</li><li>ビルダーから目的のインスタンスを生成する
+</li></ul>
+                </div>
+      </div><div class="content" id="slide-30"><div class="container">
+                  <h2 id="%E3%83%93%E3%83%AB%E3%83%80%E3%83%BC%E3%83%91%E3%82%BF%E3%83%BC%E3%83%B3">ビルダーパターン</h2><h3 id="Android%E3%81%AE%E4%BE%8B">Androidの例</h3><pre><code class="prettyprint lang-java">final AlertDialog dialog = new AlertDialog
+                           .Builder(context)
+                           .setIcon(icon)
+                           .setTitle(&quot;dialog&quot;)
+                           .setMessage(&quot;this is dialog&quot;)
+                           .create();
+</code></pre>
+                </div>
+      </div><div class="content" id="slide-31"><div class="container">
+                  <h2 id="%E6%8A%BD%E8%B1%A1%E3%83%95%E3%82%A1%E3%82%AF%E3%83%88%E3%83%AA%E3%83%BC%E3%83%91%E3%82%BF%E3%83%BC%E3%83%B3">抽象ファクトリーパターン</h2><ul><li>生成するインスタンスのクラスを、クライアント側で意識しないパターン
+</li><li>リフレクションを駆使して、実装できる感じ
+</li><li>伝統的な手法らしい
+</li><li>型安全じゃない！！
+</li></ul>
+                </div>
+      </div><div class="content" id="slide-32"><div class="container">
+                  <h2 id="%E6%8A%BD%E8%B1%A1%E3%83%95%E3%82%A1%E3%82%AF%E3%83%88%E3%83%AA%E3%83%BC%E3%83%91%E3%82%BF%E3%83%BC%E3%83%B3">抽象ファクトリーパターン</h2><pre><code class="prettyprint lang-java">final Object obj = Class.forName(&quot;MyClass&quot;).newInstance();
+</code></pre><ul><li>目的のクラスが、パラメータなしのコンストラクタを持っていないかもしれない
+</li><li>そもそも、目的のクラスが参照できないかもしれない
+</li><li>全く型安全じゃない。
+</li></ul>
+                </div>
+      </div><div class="content" id="slide-33"><div class="container">
+                  <h2 id="%E6%8A%BD%E8%B1%A1%E3%83%95%E3%82%A1%E3%82%AF%E3%83%88%E3%83%AA%E3%83%BC%E3%83%91%E3%82%BF%E3%83%BC%E3%83%B3">抽象ファクトリーパターン</h2><pre><code class="prettyprint lang-java">public interface Builder&lt;T&gt; {
+    public T build();
+}
+public class Tree extends Node{
+	public static buildTree(Builder&lt;? extends Node nodeBuilder) {...}
+}
+
+// クライアント
+public class NodeBuilder implements Builder&lt;Node&gt; {
+	public NodeBuilder addNode(String node) {...}
+
+	public Node build() {
+		return Tree.buildTree(this);
+	}
+}
+final Node tree = new NodeBuilder()
+                  .addNode(&quot;hoge&quot;)
+                  .addNode(&quot;bar&quot;).build();
+</code></pre>
+                </div>
+      </div><div class="content" id="slide-34"><div class="container">
+                  <h2 id="%E6%8A%BD%E8%B1%A1%E3%83%95%E3%82%A1%E3%82%AF%E3%83%88%E3%83%AA%E3%83%BC%E3%83%91%E3%82%BF%E3%83%BC%E3%83%B3">抽象ファクトリーパターン</h2><ul><li>Builderのインターフェースを公開することで、クライアントでオブジェクト生成を制御できる
+</li><li>生成されるインスタンスは、ライブラリ側で吸収できる
+</li><li>型安全
+</li></ul>
+                </div>
+      </div><div class="content" id="slide-35"><div class="container">
+                  <h2 id="%E3%83%93%E3%83%AB%E3%83%80%E3%83%BC%E3%83%91%E3%82%BF%E3%83%BC%E3%83%B3%E3%81%AE%E3%83%87%E3%83%A1%E3%83%AA%E3%83%83%E3%83%88">ビルダーパターンのデメリット</h2><ul><li>ビルダーの生成コスト
+</li><li>長くなる
+</li></ul>
+                </div>
+      </div><div class="content" id="slide-36"><div class="container">
+                  <h2 id="%E3%81%BE%E3%81%A8%E3%82%81">まとめ</h2><ul><li>パラメータが沢山あるときに検討するべき
+</li><li>メソッドチェーンをうまく使えば、お手軽にスレッドセーフ
+</li></ul>
+                </div>
+      </div><div class="content" id="slide-37"><div class="container">
+                  <h2 id="%E6%80%9D%E3%81%86%E6%89%80%E3%82%82%E3%81%82%E3%82%8B">思う所もある</h2><ul><li>Javaは型宣言=クラスの宣言
+</li><li><code>typedef</code>的な物があれば、テレスコーピングコンストラクタはわりと便利
+</li><li>ちなみに、Scalaには<code>type</code>がある
+</li><li>ビルダーパターン自体はスレッドセーフではない
+</li><li>異なるスレッドからの呼び出しを、普通はしないだけ
+</li><li>実際StringBuilderはスレッドアンセーフ
+</li><li>ちなみに、StringBufferはスレッドセーフ
+</li></ul>
+                </div>
+      </div><div class="content" id="slide-38"><div class="container">
+                  <h2 id="%E6%80%9D%E3%81%86%E6%89%80">思う所</h2><ul><li>クラスはイミュータブルであるべき
+</li><li>スレッドセーフ、バグ対策
+</li><li>実現のためにはビルダーパターンが欠かせない</li></ul>
+                </div>
+      </div>
+          </div>
+        </div>
+        <script type="text/javascript" src="js/custom.js?1405899378360"></script>
+      </body>
+    </html>
