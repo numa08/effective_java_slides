@@ -44,7 +44,7 @@
 public class ProductA implements Product{}
 public class ProductB implements Product{}
 public class ProductFactory {
-
+    //実は、AbstractFactoryパターンな気がする
     public  Product createProduct(String productId) {
         if ("Product_A".equals(productId)) {
             return new ProductA();
