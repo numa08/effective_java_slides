@@ -1,0 +1,258 @@
+<html>
+      <head>
+        <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+        <title>5th</title>
+        <link type="text/css" rel="stylesheet" href="assets/css/show.css" />
+        <link type="text/css" rel="stylesheet" href="assets/css/prettify.css" />
+        <script type="text/javascript" src="assets/js/jquery.min.js"></script>
+        <script type="text/javascript" src="assets/js/show.js"></script>
+        <script type="text/javascript" src="assets/js/prettify/prettify.js"></script>
+        <script type="text/javascript" src="assets/js/prettify/lang-apollo.js"></script><script type="text/javascript" src="assets/js/prettify/lang-css.js"></script><script type="text/javascript" src="assets/js/prettify/lang-hs.js"></script><script type="text/javascript" src="assets/js/prettify/lang-lisp.js"></script><script type="text/javascript" src="assets/js/prettify/lang-lua.js"></script><script type="text/javascript" src="assets/js/prettify/lang-ml.js"></script><script type="text/javascript" src="assets/js/prettify/lang-proto.js"></script><script type="text/javascript" src="assets/js/prettify/lang-scala.js"></script><script type="text/javascript" src="assets/js/prettify/lang-sql.js"></script><script type="text/javascript" src="assets/js/prettify/lang-sql.js"></script><script type="text/javascript" src="assets/js/prettify/lang-vb.js"></script><script type="text/javascript" src="assets/js/prettify/lang-vhdl.js"></script><script type="text/javascript" src="assets/js/prettify/lang-wiki.js"></script><script type="text/javascript" src="assets/js/prettify/lang-yaml.js"></script><link type="text/css" rel="stylesheet" href="css/custom.css?1409240314826" />
+      <script type="text/javascript"><!--
+        window.onload=function() { prettyPrint(); };
+      --></script>
+      </head>
+      <body>
+        <div id="slides">
+          <div id="reel">
+            <div class="content" id="slide-0"><div class="container">
+                  <h1 id="Effective+Java%E3%82%92%E8%AA%AD%E3%82%80%E4%BC%9A">Effective Javaを読む会</h1><h2 id="5%E5%9B%9E%E7%9B%AE%E3%81%8F%E3%82%89%E3%81%84">5回目くらい</h2><h2 id=""><a  href="https://twitter.com/numa08">@numa08</a></h2>
+                </div>
+      </div><div class="content" id="slide-1"><div class="container">
+                  <h2 id="%E3%81%8A%E5%93%81%E6%9B%B8%E3%81%8D">お品書き</h2><ul><li>equalsの話(項目8)
+</li><li>hashCodeの話(項目9)
+</li><li>ジェネリクス(総称型)の話(項目23,24)
+</li></ul>
+                </div>
+      </div><div class="content" id="slide-2"><div class="container">
+                  <h2 id="equals%E3%82%92%E3%82%AA%E3%83%BC%E3%83%90%E3%83%BC%E3%83%A9%E3%82%A4%E3%83%89%E3%81%99%E3%82%8B%E6%99%82%E3%81%AF%E4%B8%80%E8%88%AC%E5%A5%91%E7%B4%84%E3%81%AB%E5%BE%93%E3%81%86">equalsをオーバーライドする時は一般契約に従う</h2><h3 id="%E3%81%9D%E3%82%82%E3%81%9D%E3%82%82equals%E3%81%A8%E3%81%AF%EF%BC%9F">そもそもequalsとは？</h3><ul><li>オブジェクト(インスタンス)の論理的等価性を検査するためのメソッド
+</li><li>すべての参照型に共通するメソッドの一つ
+</li></ul><pre><code class="prettyprint lang-java">class Object {
+  public boolean equals(Object obj) {
+    return (this == obj);
+  }
+}
+</code></pre>
+                </div>
+      </div><div class="content" id="slide-3"><div class="container">
+                  <h2 id="%E8%AB%96%E7%90%86%E7%9A%84%E7%AD%89%E4%BE%A1%E6%80%A7">論理的等価性</h2><pre><code class="prettyprint lang-java">&quot;hogehoge&quot;.equals(&quot;hogehoge&quot;); //true
+&quot;hogehoge&quot; == &quot;hogehoge&quot;; //false
+</code></pre><ul><li>上は論理的等価性検査
+</li><li>下は等値性検査
+</li></ul>
+                </div>
+      </div><div class="content" id="slide-4"><div class="container">
+                  <h2 id="equals%E3%82%92%E3%82%AA%E3%83%BC%E3%83%90%E3%83%BC%E3%83%A9%E3%82%A4%E3%83%89%E3%81%97%E3%81%AA%E3%81%84%E3%82%B1%E3%83%BC%E3%82%B9">equalsをオーバーライドしないケース</h2><p>equalsのオーバーライドはバグの要因。必要のないときには無闇矢鱈にオーバーライドしない
+</p><ul><li><p>クラスの個々のインスタンスが本質的に一位であるケース
+</p><ul><li>クラスが値やデータよりも、振る舞いを表現している場合
+</li></ul></li><li><p>論理的等価性検査をする必要がない
+</p><ul><li>ケースバイケースで
+</li></ul></li><li>すでにスーパークラスがequalsをオーバーライドしていて、機能が十分な場合
+</li><li><p>クラスがprivateあるいはパッケージプライベートであり、eequalsが呼び出されない
+</p><ul><li>呼び出されるのは例外的ケースと言えるので、例外飛ばそう
+</li></ul></li></ul>
+                </div>
+      </div><div class="content" id="slide-5"><div class="container">
+                  <h2 id="equals%E3%82%92%E3%82%AA%E3%83%BC%E3%83%90%E3%83%BC%E3%83%A9%E3%82%A4%E3%83%89%E3%81%99%E3%82%8B%E3%82%B1%E3%83%BC%E3%82%B9">equalsをオーバーライドするケース</h2><ul><li>データや値を格納するクラス
+</li><li>jUnitなどでテストを書くケース
+</li><li>HashMapで管理するケース
+</li><li>enumが利用できないケース
+</li></ul>
+                </div>
+      </div><div class="content" id="slide-6"><div class="container">
+                  <h2 id="%E4%B8%80%E8%88%AC%E7%9A%84%E5%A5%91%E7%B4%84%E3%81%A8%E3%81%AF">一般的契約とは</h2><p>5個ある要件を満たすもの
+</p><ul><li>反射的である
+</li><li>対照的である
+</li><li>推移的である
+</li><li>整合的である
+</li><li>x.equals(null) == falseである
+</li></ul>
+                </div>
+      </div><div class="content" id="slide-7"><div class="container">
+                  <h2 id="%E5%8F%8D%E5%B0%84%E7%9A%84%E3%81%A7%E3%81%82%E3%82%8B">反射的である</h2><pre><code class="prettyprint lang-java">assertThat(x.equals(x),is(true));
+</code></pre>
+                </div>
+      </div><div class="content" id="slide-8"><div class="container">
+                  <h2 id="%E5%AF%BE%E7%85%A7%E7%9A%84%E3%81%A7%E3%81%82%E3%82%8B">対照的である</h2><pre><code class="prettyprint lang-java">assertThat(x.equals(y) == y.equals(x), is(true));
+</code></pre>
+                </div>
+      </div><div class="content" id="slide-9"><div class="container">
+                  <h2 id="%E6%8E%A8%E7%A7%BB%E7%9A%84%E3%81%A7%E3%81%82%E3%82%8B">推移的である</h2><pre><code class="prettyprint lang-java">if(x.equals(y) &amp;&amp; y.equals(z)) {
+  assertThat(z.equals(x),is(true));
+}
+</code></pre>
+                </div>
+      </div><div class="content" id="slide-10"><div class="container">
+                  <h2 id="%E6%95%B4%E5%90%88%E7%9A%84%E3%81%A7%E3%81%82%E3%82%8B">整合的である</h2><pre><code class="prettyprint lang-java">assertThat(x.equals(y),is(true));
+// a long time ago...
+assertThat(x.equals(y),is(true));
+</code></pre>
+                </div>
+      </div><div class="content" id="slide-11"><div class="container">
+                  <h2 id="%E4%BB%8A%E3%82%84%E3%82%8B%E3%81%A8%E6%81%A5%E3%81%9A%E3%81%8B%E3%81%97%E3%81%84%E6%9B%B8%E3%81%8D%E6%96%B9">今やると恥ずかしい書き方</h2><pre><code class="prettyprint lang-java">final boolean isEqual;
+if(x != null) {
+  isEqual = x.equals(y);
+} else {
+  isEqual = false;
+}
+</code></pre>
+                </div>
+      </div><div class="content" id="slide-12"><div class="container">
+                  <h2 id="%E3%81%93%E3%82%8C%E3%81%AF%E3%81%BE%E3%81%82%E8%A8%B1%E5%AE%B9%E3%81%95%E3%82%8C%E3%82%8B%E3%81%91%E3%81%A9%E3%80%81%E6%A0%BC%E5%A5%BD%E8%89%AF%E3%81%8F%E3%81%AA%E3%81%84">これはまあ許容されるけど、格好良くない</h2><pre><code class="prettyprint lang-java">//xがnullでも問題ない
+final boolean isEqual = Objects.equals(x, y);
+// ax, ayの両方あるいは一方が配列やコレクションの場合
+final boolean isEqual = Objects.deepEquals(ax, ay);
+</code></pre>
+                </div>
+      </div><div class="content" id="slide-13"><div class="container">
+                  <h2 id="%E4%BB%8A%E9%A2%A8%E3%81%AE%E6%9B%B8%E3%81%8D%E6%96%B9">今風の書き方</h2><pre><code class="prettyprint lang-java">final boolean isEqual = 
+	Optional.of(x)
+        .map((x) -&gt; {x.equals(y)})
+        .orElse(false);
+</code></pre>
+                </div>
+      </div><div class="content" id="slide-14"><div class="container">
+                  <h2 id="equals%E3%82%92%E3%82%AA%E3%83%BC%E3%83%90%E3%83%BC%E3%83%A9%E3%82%A4%E3%83%89%E3%81%99%E3%82%8B%E3%81%A8%E3%81%8D%E3%81%AF%E3%80%81hashCode%E3%82%92%E3%82%AA%E3%83%BC%E3%83%90%E3%83%BC%E3%83%A9%E3%82%A4%E3%83%89%E3%81%99%E3%82%8B">equalsをオーバーライドするときは、hashCodeをオーバーライドする</h2><ul><li>そういう仕様なので
+</li><li>HashMapなどの動きがおかしくなる
+</li></ul>
+                </div>
+      </div><div class="content" id="slide-15"><div class="container">
+                  <h2 id="hashCode%E3%81%AE%E3%82%AA%E3%83%BC%E3%83%90%E3%83%BC%E3%83%A9%E3%82%A4%E3%83%89">hashCodeのオーバーライド</h2><p>古のやり方
+</p><pre><code class="prettyprint lang-java">@Override
+public int hashCode() {
+  int result = 17;
+  result = 31 * result + age;
+  result = 31 * result + name.hashCode();
+  result = 31 * result + work.hashCode();
+  return result;
+}
+</code></pre>
+                </div>
+      </div><div class="content" id="slide-16"><div class="container">
+                  <p>##今のやり方
+</p><pre><code class="prettyprint lang-java">@Override
+public int hashCode() {
+  return Objects.hash(age, name, work);
+}
+</code></pre>
+                </div>
+      </div><div class="content" id="slide-17"><div class="container">
+                  <h2 id="%E3%81%A1%E3%81%AA%E3%81%BF%E3%81%AB">ちなみに</h2><pre><code class="prettyprint lang-java">(x.equals(y)) == (x.hashCode() == y.hashCode());
+</code></pre>
+                </div>
+      </div><div class="content" id="slide-18"><div class="container">
+                  <h2 id="%E6%96%B0%E3%81%9F%E3%81%AA%E3%82%B3%E3%83%BC%E3%83%89%E3%81%A7%E5%8E%9F%E5%9E%8B%E3%82%92%E5%88%A9%E7%94%A8%E3%81%97%E3%81%AA%E3%81%84">新たなコードで原型を利用しない</h2>
+                </div>
+      </div><div class="content" id="slide-19"><div class="container">
+                  <h2 id="%E4%BA%BA%E9%96%93%E6%AD%A2%E3%82%81%E3%81%BE%E3%81%99%E3%81%8B%EF%BC%9F%E5%9E%8B%E5%AE%89%E5%85%A8%E3%82%84%E3%82%81%E3%81%BE%E3%81%99%E3%81%8B%EF%BC%9F">人間止めますか？型安全やめますか？</h2><p><img alt=""  src="hello/img1.jpg" />
+</p><p><a  href="http://www.jigokushoujo.com/character/ai02.html">http://www.jigokushoujo.com/character/ai02.html</a>
+</p>
+                </div>
+      </div><div class="content" id="slide-20"><div class="container">
+                  <h2 id="%E4%BB%8A%E6%99%82%E3%81%93%E3%82%93%E3%81%AA%E3%81%93%E3%81%A8%E3%82%89%E3%81%AA%E3%81%84%E3%82%88%E3%81%AD%EF%BC%9F">今時こんなことらないよね？</h2><pre><code class="prettyprint lang-java">// 今時こんなのやる人はいない
+final List names = new ArrayList(); //Stringが欲しいな
+names.add(&quot;nobita&quot;);
+names.add(&quot;mitsuo&quot;);
+names.add(&quot;shouta&quot;);
+names.add(9); //oh...
+for(Object n : names) {
+  String name = (String)n; //Class Cast Exception
+  System.out.println(name);
+}
+</code></pre>
+                </div>
+      </div><div class="content" id="slide-21"><div class="container">
+                  <h2 id="%E7%8F%BE%E4%BB%A3%E3%81%AE%E5%B8%B8%E8%AD%98">現代の常識</h2><pre><code class="prettyprint lang-java">final List&lt;String&gt; names = new ArrayList&lt;&gt;();
+names.add(&quot;bakeru&quot;);
+names.add(&quot;takahata&quot;);
+names.add(&quot;bonn&quot;);
+names.add(0); //コンパイルエラー！！
+</code></pre>
+                </div>
+      </div><div class="content" id="slide-22"><div class="container">
+                  <h2 id="%E4%BB%8A%E3%82%92%E7%94%9F%E3%81%8D%E3%82%88">今を生きよ</h2><pre><code class="prettyprint lang-java">final List&lt;String&gt; names = 
+	Arrays.asList(&quot;mikio&quot;,&quot;saenai&quot;,&quot;dobinson&quot;);
+names.forEach(s -&gt; System.out.println(s));
+</code></pre>
+                </div>
+      </div><div class="content" id="slide-23"><div class="container">
+                  <h2 id="%E3%82%B8%E3%82%A7%E3%83%8D%E3%83%AA%E3%82%AF%E3%82%B9%E3%81%AE%E8%A9%B1">ジェネリクスの話</h2><ul><li><a  href="https://twitter.com/odersky">Martin Odersky</a>先生が開発者
+</li><li>この人はScalaの開発者
+</li><li>来月、来日するよ！
+</li></ul>
+                </div>
+      </div><div class="content" id="slide-24"><div class="container">
+                  <h2 id="%E3%82%B8%E3%82%A7%E3%83%8D%E3%83%AA%E3%82%AF%E3%82%B9%E4%BB%A5%E5%89%8D">ジェネリクス以前</h2><ul><li>java1.2とかの頃
+</li><li><a  href="http://pizzacompiler.sourceforge.net/">The Pizza Compiler</a>
+</li><li>ジェネリクスや無名関数が導入された、jvmで動作する言語
+</li></ul>
+                </div>
+      </div><div class="content" id="slide-25"><div class="container">
+                  <h2 id="Pizza">Pizza</h2><pre><code class="prettyprint lang-java">class StoreSomething&lt;A&gt; {
+     A something;
+
+     StoreSomething(A something) {
+         this.something = something;
+     }
+
+     void set(A something) {
+         this.something = something;
+     }
+
+     A get() {
+         return something;
+     }
+}
+</code></pre>
+                </div>
+      </div><div class="content" id="slide-26"><div class="container">
+                  <h2 id="Pizza%E3%81%8C%E4%B8%80%E7%95%AA%E6%84%9B%E3%81%97%E3%81%9F%E5%A8%98%E3%80%81%E3%81%9D%E3%82%8C%E3%81%AFJava">Pizzaが一番愛した娘、それはJava</h2><ul><li>Java5でジェネリクスが導入されたあたりで、Pizzaの開発は止まっているっぽい
+</li><li>Java8でラムダも取り入れられたので、Pizzaの機能はほぼ網羅した？
+</li></ul>
+                </div>
+      </div><div class="content" id="slide-27"><div class="container">
+                  <h2 id="Java%E3%81%AF%E5%9E%8B%E5%AE%89%E5%85%A8%EF%BC%9F">Javaは型安全？</h2><ul><li>静的で強い型付け
+</li><li>ジェネリクスや境界値による安全で柔軟な型の操作
+</li><li>突然のダウンキャスト！！
+</li><li>SuperType -&gt; SubTypeのキャストをやりまくると死ぬよ！！ 
+</li><li>もう一声欲しいところ
+</li></ul>
+                </div>
+      </div><div class="content" id="slide-28"><div class="container">
+                  <h2 id="%E3%81%9D%E3%81%93%E3%81%A7Scala%E3%81%A7%E3%81%99%E3%82%88%EF%BC%81%EF%BC%81">そこでScalaですよ！！</h2><ul><li>構造的部分型
+</li><li>typeで、特定のメソッドを実装した型を定義できる
+</li><li>Duck Typingできる！
+</li></ul><pre><code class="prettyprint lang-scala">type Duck = { def quack() : String}
+</code></pre>
+                </div>
+      </div><div class="content" id="slide-29"><div class="container">
+                  <h2 id="%E6%A7%8B%E9%80%A0%E7%9A%84%E9%83%A8%E5%88%86%E5%9E%8B">構造的部分型</h2><pre><code class="prettyprint lang-java">Bird tori = ...
+((Duck)bird).quack();
+</code></pre>
+                </div>
+      </div><div class="content" id="slide-30"><div class="container">
+                  <h2 id="%E8%A4%87%E5%90%88%E5%9E%8B">複合型</h2><ul><li>複数のtraitを実装していることを表す型
+</li></ul><pre><code class="prettyprint lang-scala">trait Clonable { def clone() : Clonable}
+trait Resetable { def reset : Unit}
+def cloneAndRest(obj : Clonable with Resetable) : Clonable = {
+ val org = obj.clone()
+ obj.reset
+ org
+}
+</code></pre>
+                </div>
+      </div><div class="content" id="slide-31"><div class="container">
+                  <h2 id="%E8%A4%87%E5%90%88%E5%9E%8B">複合型</h2><pre><code class="prettyprint lang-java">interface CloneableAndResetable 
+	extends Cloneable,
+	Resetable{}
+</code></pre>
+                </div>
+      </div><div class="content" id="slide-32"><div class="container">
+                  <h2 id=""><a  href="http://www.amazon.co.jp/%E5%9E%8B%E3%82%B7%E3%82%B9%E3%83%86%E3%83%A0%E5%85%A5%E9%96%80-%E2%88%92%E3%83%97%E3%83%AD%E3%82%B0%E3%83%A9%E3%83%9F%E3%83%B3%E3%82%B0%E8%A8%80%E8%AA%9E%E3%81%A8%E5%9E%8B%E3%81%AE%E7%90%86%E8%AB%96%E2%88%92-Benjamin-C-Pierce/dp/4274069117">型システム入門</a></h2><p><img alt=""  src="hello/img2.jpg" /></p>
+                </div>
+      </div>
+          </div>
+        </div>
+        <script type="text/javascript" src="js/custom.js?1409240315682"></script>
+      </body>
+    </html>
