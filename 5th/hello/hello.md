@@ -119,8 +119,9 @@ if(x.equals(y) && y.equals(z)) {
 
 
 ```java
+// x, yはイミュータブル
 assertThat(x.equals(y),is(true));
-// a long time ago...
+// なんど呼び出しても結果は同じ
 assertThat(x.equals(y),is(true));
 ```
 
@@ -332,8 +333,20 @@ class StoreSomething<A> {
  - typeで、特定のメソッドを実装した型を定義できる
  - Duck Typingできる！
 
+!SLIDE
+
+## 構造的部分型Scala
+
 ```scala
-type Duck = { def quack() : String}
+type Stringfy = {
+  def mkString(start : String, sep : String, end : String) 
+    = String
+}
+def makeString(target : Stringfy) : String = {
+  target.mkString("(",",",")")
+}
+makeString(List(1,2,3)) //"(1,2,3)"
+makeString(new java.util.Date) // type mismatch
 ```
 
 !SLIDE
@@ -342,10 +355,23 @@ type Duck = { def quack() : String}
 
 
 ```java
-Bird tori = ...
-((Duck)bird).quack();
+public String makeString(Object target) {
+  return ((List)target).mkString("(',",",")"); 
+  // ダウンキャストしている
+  // 型安全じゃない！！
+}
+makeString(Arrays.asList(1,2,3));
+makeString(new java.util.Date());
 ```
 
+!SLIDE
+
+## 部分的構造型
+
+ - メソッドのシグニチャで型付けできる
+ - trait,interface,abstract classなどの継承関係にない型を柔軟に利用可能
+ - ダックタイピング！！！
+ - [(皿うどん)Structural Subtyping(構造的部分型)アレコレ - ( ꒪⌓꒪) ゆるよろ日記](http://yuroyoro.hatenablog.com/entry/20110126/1296044588)
 
 !SLIDE
 
